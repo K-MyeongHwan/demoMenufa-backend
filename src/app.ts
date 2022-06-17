@@ -1,6 +1,8 @@
 import express, { Request, Response, NextFunction } from "express"
 import { Client } from "pg";
 
+const port = process.env.PORT || 8080
+
 const app = express();
 
 const client = new Client()
@@ -12,11 +14,9 @@ app.get('/', (request, response) => {
     client.end()
   })
 
-  response.status(200).json({
-    message: "done"
-  })
+  response.send('test')
 })
 
-app.listen(8080, () => {
+app.listen(port, () => {
   console.log('server started')
 })
