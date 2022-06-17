@@ -14,7 +14,9 @@ app.get('/', (request, response) => {
   //   client.end()
   // })
 
-  response.send('test')
+  response.json({
+    message: "hello"
+  })
 })
 
 app.listen(port, () => {
