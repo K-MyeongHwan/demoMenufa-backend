@@ -8,11 +8,11 @@ const app = express();
 const client = new Client()
 
 app.get('/', (request, response) => {
-  client.connect()
-  client.query('SELECT firstname from contact', (err, res) => {
-    console.log(err ? err.stack : response.send(res.rows[0]))
-    client.end()
-  })
+  // client.connect()
+  // client.query('SELECT firstname from contact', (err, res) => {
+  //   console.log(err ? err.stack : response.send(res.rows[0]))
+  //   client.end()
+  // })
 
   response.send('test')
 })
