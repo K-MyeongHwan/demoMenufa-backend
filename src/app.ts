@@ -7,7 +7,7 @@ const app = express();
 
 const client = new Client()
 
-app.get('/', (request, response) => {
+app.get('/test', (request, response) => {
   // client.connect()
   // client.query('SELECT firstname from contact', (err, res) => {
   //   console.log(err ? err.stack : response.send(res.rows[0]))
