@@ -8,11 +8,14 @@ const app = express();
 const client = new Client()
 
 app.get('/test', (request: Request, response: Response, next: NextFunction) => {
-  client.connect()
-  client.query('SELECT firstname from contact', (err, res) => {
-    err ? console.log(err.stack) : response.send(res.rows[0])
-    client.end()
-  })
+  // client.connect().then(() => {
+  //   client.query('SELECT firstname from salesforce.contact', (err, res) => {
+  //     err ? console.log(err.stack) : response.send(res.rows[0])
+  //     client.end()
+  //   })
+  // })
+
+  response.send('test')
 })
 
 app.listen(port, () => {
