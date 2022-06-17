@@ -11,6 +11,10 @@ app.get('/', (request, response) => {
     console.log(err ? err.stack : response.send(res.rows[0]))
     client.end()
   })
+
+  response.status(200).json({
+    message: "done"
+  })
 })
 
 app.listen(8080, () => {
