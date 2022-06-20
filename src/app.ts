@@ -30,5 +30,5 @@ app.get('/', (request: Request, response: Response, next: NextFunction) => {
 })
 
 app.listen(port, () => {
-  console.log('server started')
+  console.log(`Server is now running on port ${port}`)
 })
