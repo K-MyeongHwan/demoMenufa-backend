@@ -18,19 +18,6 @@ app.get('/test', async (request: Request, response: Response, next: NextFunction
 
   client.connect()
 
-  // let result
-  // client.query('select firstname from salesforce.contact', (err, res) => {
-  //   if (err) {
-  //     response.json({
-  //       message: err.message,
-  //       cause: err.cause
-  //     })
-  //   } else {
-  //     result = res
-  //     response.json(result)
-  //   }
-  // })
-
   // ! Async method
   const result = await client.query('select id, firstname, lastname from salesforce.contact')
   response.json(result.rows)
