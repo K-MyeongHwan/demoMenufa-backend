@@ -14,20 +14,26 @@ const client = new Client({
   }
 })
 
-app.get('/test', (request: Request, response: Response, next: NextFunction) => {
-  let result
+app.get('/test', async (request: Request, response: Response, next: NextFunction) => {
+
   client.connect()
-  client.query('select firstname from salesforce.contact', (err, res) => {
-    if (err) {
-      response.json({
-        message: err.message,
-        cause: err.cause
-      })
-    } else {
-      result = res
-      response.json(result)
-    }
-  })
+
+  // let result
+  // client.query('select firstname from salesforce.contact', (err, res) => {
+  //   if (err) {
+  //     response.json({
+  //       message: err.message,
+  //       cause: err.cause
+  //     })
+  //   } else {
+  //     result = res
+  //     response.json(result)
+  //   }
+  // })
+
+  // ! Async method
+  const result = await client.query('select id, firstname, lastname from salesforce.contact')
+  response.json(result.rows)
   client.end()
 
 })
