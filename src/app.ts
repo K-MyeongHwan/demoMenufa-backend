@@ -6,7 +6,6 @@ const port = process.env.PORT || 3000
 dotenv.config();
 
 const app = express();
-app.set('json spaces', 2)
 
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
