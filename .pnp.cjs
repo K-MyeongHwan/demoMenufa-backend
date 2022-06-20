@@ -36,6 +36,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/express", "npm:4.17.13"],\
             ["@types/node", "npm:18.0.0"],\
             ["@types/pg", "npm:8.6.5"],\
+            ["dotenv", "npm:16.0.1"],\
             ["express", "npm:4.18.1"],\
             ["nodemon", "npm:2.0.16"],\
             ["pg", "virtual:93a442622433c937ee1fa3753dda37e9a49cf93eef732cb86093363f0d5990709da3a88495b8fc6761b1c7bc46bbde7b7cfa243c0923d85542ae39a12a368676#npm:8.7.3"],\
@@ -955,6 +956,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["dotenv", [\
+        ["npm:16.0.1", {\
+          "packageLocation": "./.yarn/cache/dotenv-npm-16.0.1-d99e72bb95-f459ffce07.zip/node_modules/dotenv/",\
+          "packageDependencies": [\
+            ["dotenv", "npm:16.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["duplexer3", [\
         ["npm:0.1.4", {\
           "packageLocation": "./.yarn/cache/duplexer3-npm-0.1.4-361a33d994-c2fd696931.zip/node_modules/duplexer3/",\
@@ -1364,6 +1374,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/express", "npm:4.17.13"],\
             ["@types/node", "npm:18.0.0"],\
             ["@types/pg", "npm:8.6.5"],\
+            ["dotenv", "npm:16.0.1"],\
             ["express", "npm:4.18.1"],\
             ["nodemon", "npm:2.0.16"],\
             ["pg", "virtual:93a442622433c937ee1fa3753dda37e9a49cf93eef732cb86093363f0d5990709da3a88495b8fc6761b1c7bc46bbde7b7cfa243c0923d85542ae39a12a368676#npm:8.7.3"],\

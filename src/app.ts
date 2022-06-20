@@ -1,21 +1,40 @@
 import express, { Request, Response, NextFunction } from "express"
-import { Client } from "pg";
+import { Client } from "pg"
+import dotenv from "dotenv";
 
 const port = process.env.PORT || 3000
+dotenv.config();
 
 const app = express();
+app.set('json spaces', 2)
 
-const client = new Client()
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+})
 
 app.get('/test', (request: Request, response: Response, next: NextFunction) => {
-  // client.connect().then(() => {
-  //   client.query('SELECT firstname from salesforce.contact', (err, res) => {
-  //     err ? console.log(err.stack) : response.send(res.rows[0])
-  //     client.end()
-  //   })
-  // })
+  let result
+  client.connect()
+  client.query('select firstname from salesforce.contact', (err, res) => {
+    if (err) {
+      response.json({
+        message: err.message,
+        cause: err.cause
+      })
+    } else {
+      result = res
+      response.json(result)
+    }
+  })
+  client.end()
 
-  response.send('test')
+})
+
+app.get('/', (request: Request, response: Response, next: NextFunction) => {
+  response.send('Go to /test for salesforce query test')
 })
 
 app.listen(port, () => {
