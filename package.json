@@ -2,7 +2,7 @@
   "name": "heroku-backend",
   "packageManager": "yarn@3.2.1",
   "scripts": {
-    "start": "node dist/app.js",
+    "start": "node dist/src/app.js",
     "build": "tsc"
   },
   "engines": {
