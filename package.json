@@ -3,7 +3,8 @@
   "packageManager": "yarn@3.2.1",
   "scripts": {
     "start": "node dist/src/app.js",
-    "build": "tsc"
+    "build": "tsc",
+    "dev": "ts-node src/app.ts"
   },
   "engines": {
     "node": "16.x"
