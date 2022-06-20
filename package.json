@@ -5,6 +5,9 @@
     "start": "node dist/app.js",
     "postinstall": "tsc"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "devDependencies": {
     "@types/express": "^4.17.13",
     "@types/node": "^18.0.0",
