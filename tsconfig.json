@@ -12,9 +12,13 @@
     "skipLibCheck": true,
     "types": [
       "node"
+    ],
+    "typeRoots": [
+      "@types"
     ]
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "@types"
   ]
 }
