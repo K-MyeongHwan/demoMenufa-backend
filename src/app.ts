@@ -1,6 +1,8 @@
 import express, { NextFunction, Request, Response } from "express"
 import { Client } from "pg"
 import dotenv from "dotenv";
+
+// Routers
 import testRouter from "./router/testRouter";
 
 // Environment variable setup
