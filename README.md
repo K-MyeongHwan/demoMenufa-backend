@@ -12,23 +12,27 @@ or
 yarn install
 ```
 
-Run development server
+### Run development server
 
 ```console
 yarn dev
 ```
 
-Build
+then connect to `localhost:3000`
+
+### Build
 
 ```console
 yarn build
 ```
 
-Run the server with built output
+### Run the server with built output
 
 ```console
 yarn start
 ```
+
+then connect to `localhost:3000`
 
 ## Dependencies
 
@@ -40,11 +44,8 @@ yarn start
 
 ---
 
-## `app.ts`
+## Structure
 
-Main entry
-
-## `src` Folder structures
-
-- `api` : Functions to execute
-- `router` : Routes
+- `src/app.ts` : main entry
+- `src/api/` : Functions to execute
+- `src/router/` : Routes
