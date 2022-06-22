@@ -1,12 +1,13 @@
-import express, { Request, Response, NextFunction } from "express"
+import express, { NextFunction, Request, Response } from "express"
 import { Client } from "pg"
 import dotenv from "dotenv";
+import { testRoute } from "./router/test";
 
+// Environment variable setup
 const port = process.env.PORT || 3000
 dotenv.config();
 
-const app = express();
-
+// Node-Postgres client connection
 const client = new Client({
   connectionString: process.env.DATABASE_URL,
   ssl: {
@@ -14,21 +15,21 @@ const client = new Client({
   }
 })
 
-app.get('/test', async (request: Request, response: Response, next: NextFunction) => {
+const useClient = (req: Request, res: Response, next: NextFunction) => {
+  req.client = client
+  next()
+}
 
-  client.connect()
+// Express setup
+const app = express();
 
-  // ! Async method
-  const result = await client.query('select id, firstname, lastname from salesforce.contact')
-  response.json(result.rows)
-  client.end()
+// Routers
 
-})
+app.use('/', useClient)
+app.get('/', (req: Request, res: Response) => res.send('Go to /test for salesforce query test'))
+app.get('/test', testRoute)
 
-app.get('/', (request: Request, response: Response, next: NextFunction) => {
-  response.send('Go to /test for salesforce query test')
-})
-
+// Listener
 app.listen(port, () => {
   console.log(`Server is now running on port ${port}`)
 })
