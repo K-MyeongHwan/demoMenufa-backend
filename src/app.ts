@@ -1,7 +1,7 @@
 import express, { NextFunction, Request, Response } from "express"
 import { Client } from "pg"
 import dotenv from "dotenv";
-import { testRoute } from "./router/test";
+import testRouter from "./router/testRouter";
 
 // Environment variable setup
 const port = process.env.PORT || 3000
@@ -27,7 +27,7 @@ const app = express();
 
 app.use('/', useClient)
 app.get('/', (req: Request, res: Response) => res.send('Go to /test for salesforce query test'))
-app.get('/test', testRoute)
+app.get('/test', testRouter)
 
 // Listener
 app.listen(port, () => {
