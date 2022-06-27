@@ -47,5 +47,5 @@ then connect to `localhost:3000`
 ## Structure
 
 - `src/app.ts` : main entry
-- `src/api/` : Functions to execute
-- `src/router/` : Routes
+- `src/controllers/` : Functions to execute
+- `src/routes/` : Routes
