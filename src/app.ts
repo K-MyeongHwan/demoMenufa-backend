@@ -19,10 +19,9 @@ app.get("/", (req: Request, res: Response) =>
 app.use("/user", userRouter);
 app.use("/area", areaRouter);
 
+// Global Error handler
+// ! THIS MUST BE AT THE END OF ROUTE SETTINGS
 app.use(errorHandler);
-
-// app.get('/area', areaRouter)
-// app.get('', areaRouter)
 
 // Listener
 app.listen(port, () => {
