@@ -1,26 +1,14 @@
-import express, { NextFunction, Request, Response } from "express"
-import { Client } from "pg"
-import dotenv from "dotenv";
+import express, { Request, Response } from "express"
 
-// Routers
-import testRouter from "./router/testRouter";
+// Routes
+import testRouter from "./routes/testRouter";
+import userRouter from "./routes/userRouter"
+
+// Middlewares
+import {useClient} from './middlewares/useClient'
 
 // Environment variable setup
 const port = process.env.PORT || 3000
-dotenv.config();
-
-// Node-Postgres client connection
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
-})
-
-const useClient = (req: Request, res: Response, next: NextFunction) => {
-  req.client = client
-  next()
-}
 
 // Express setup
 const app = express();
@@ -30,6 +18,10 @@ const app = express();
 app.use('/', useClient)
 app.get('/', (req: Request, res: Response) => res.send('Go to /test for salesforce query test'))
 app.get('/test', testRouter)
+app.get('/user', userRouter)
+
+// app.get('/area', areaRouter)
+// app.get('', areaRouter)
 
 // Listener
 app.listen(port, () => {

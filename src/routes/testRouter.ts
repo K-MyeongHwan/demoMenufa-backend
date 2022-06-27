@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import { test } from "../api/test";
+import { test } from "../controllers/test";
 
 const router: Router = express.Router()
 
