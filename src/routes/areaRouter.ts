@@ -1,9 +1,9 @@
 import express, { Router } from "express";
-import { modifyArea, area } from "../controllers/area";
+import { areaManipulator, area } from "../controllers/area";
 
 const router: Router = express.Router();
 
 router.get("/", area);
-router.post("/", modifyArea);
+router.post("/", areaManipulator);
 
 export default router;
