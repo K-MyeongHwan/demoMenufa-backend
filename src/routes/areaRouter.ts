@@ -1,8 +1,9 @@
 import express, { Router } from "express";
-import { test } from "../controllers/test";
+import { addArea, area } from "../controllers/area";
 
 const router: Router = express.Router()
 
-router.use('/', test)
+router.get('/', area)
+router.post('/', addArea)
 
 export default router
