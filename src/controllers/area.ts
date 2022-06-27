@@ -17,7 +17,7 @@ export const area = async (req: Request, res: Response) => {
   client.release();
 };
 
-export const addArea = async (req: Request, res: Response) => {
+export const modifyArea = async (req: Request, res: Response) => {
   const { id, name } = req.query;
   const client = await db.connect();
 
