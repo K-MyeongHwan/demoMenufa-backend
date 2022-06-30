@@ -3,6 +3,8 @@ import express, { Request, Response } from "express";
 // Routes
 import userRouter from "./routes/userRouter";
 import areaRouter from "./routes/areaRouter";
+import logisticsRouter from "./routes/logisticsRouter";
+import companyRouter from "./routes/companyRouter";
 import { errorHandler } from "./middlewares/errorHandler";
 
 // Environment variable setup
@@ -18,6 +20,8 @@ app.get("/", (req: Request, res: Response) =>
 );
 app.use("/user", userRouter);
 app.use("/area", areaRouter);
+app.use("/logistics", logisticsRouter);
+app.use("/company", companyRouter);
 
 // Global Error handler
 // ! THIS MUST BE AT THE END OF ROUTE SETTINGS
