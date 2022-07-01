@@ -3,6 +3,7 @@ import express, { Request, Response } from "express";
 // Routes
 import userRouter from "./routes/userRouter";
 import areaRouter from "./routes/areaRouter";
+import chatRouter from "./routes/chatRouter";
 import { errorHandler } from "./middlewares/errorHandler";
 
 // Environment variable setup
@@ -18,6 +19,7 @@ app.get("/", (req: Request, res: Response) =>
 );
 app.use("/user", userRouter);
 app.use("/area", areaRouter);
+app.use("/chat", chatRouter);
 
 // Global Error handler
 // ! THIS MUST BE AT THE END OF ROUTE SETTINGS
