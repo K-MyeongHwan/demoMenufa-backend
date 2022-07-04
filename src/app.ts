@@ -7,6 +7,7 @@ import chatRouter from "./routes/chatRouter";
 import logisticsRouter from "./routes/logisticsRouter";
 import companyRouter from "./routes/companyRouter";
 import boardRouter from "./routes/boardRouter";
+
 import { errorHandler } from "./middlewares/errorHandler";
 
 // Environment variable setup
@@ -26,6 +27,7 @@ app.use("/chat", chatRouter);
 app.use("/logistics", logisticsRouter);
 app.use("/company", companyRouter);
 app.use("/board", boardRouter);
+
 
 // Global Error handler
 // ! THIS MUST BE AT THE END OF ROUTE SETTINGS
