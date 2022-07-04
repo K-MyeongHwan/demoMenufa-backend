@@ -2,13 +2,14 @@
  * TABLE    : salesforce.logistics__c
  */
 
-import { Request, response, Response } from "express";
+import { Request, Response } from "express";
 import { db } from "../db";
 
 /**
  * GET
  * 모든 물류센터 표시
  */
+
 export const logisticsList = async (req: Request, res: Response) => {
   try {
     const client = await db.connect();
@@ -21,6 +22,7 @@ export const logisticsList = async (req: Request, res: Response) => {
     res.send(["Something went wrong", error]);
   }
 };
+
 
 /**
  * POST
