@@ -25,6 +25,5 @@ export const checkPassword = async (
 ) => {
   const key = await pbkdf2Promise(userInput, salt, 104906, 64, "sha512");
   const hashedPassword = key.toString("base64");
-  console.log(hashedPassword, password);
   return password === hashedPassword;
 };

@@ -19,7 +19,7 @@ export const register = async (req: Request, res: Response) => {
   const _userInfoFormatted = _userInfo.map((el) => `'${el}'`).join(", ");
 
   if (_userInfo.includes("")) {
-    res.status(500).send("Missing parameter");
+    res.status(400).send("Missing parameter");
   }
 
   const client = await db.connect();
