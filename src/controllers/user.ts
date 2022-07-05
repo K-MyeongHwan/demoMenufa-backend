@@ -3,7 +3,7 @@ import { db } from "../db";
 import { checkPassword, serializePassword } from "../services/auth";
 
 export const register = async (req: Request, res: Response) => {
-  const { id, name, email, profile, password } = req.query as unknown as Record<
+  const { id, name, email, profile, password } = req.body as unknown as Record<
     string,
     string
   >;
@@ -33,7 +33,7 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-  const { id, password } = req.query as unknown as Record<string, string>;
+  const { id, password } = req.body as unknown as Record<string, string>;
   try {
     const client = await db.connect();
     const user = await client.query(

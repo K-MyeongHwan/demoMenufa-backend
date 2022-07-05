@@ -9,6 +9,6 @@ export const errorHandler = (
   res.status(500).send({
     error: "Internal Server Error",
   });
-  console.error("* Error", err.stack, "* Request", req.query);
+  console.error("* Error", err.stack, "* Request", req.body);
   next(err);
 };

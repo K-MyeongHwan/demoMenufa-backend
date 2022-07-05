@@ -23,14 +23,13 @@ export const logisticsList = async (req: Request, res: Response) => {
   }
 };
 
-
 /**
  * POST
  * 새 물류센터 생성
  */
 export const createLogistics = async (req: Request, res: Response) => {
   try {
-    const { name, address, location } = req.query;
+    const { name, address, location } = req.body;
     const client = await db.connect();
     await client.query(
       `insert into salesforce.logistics__c
@@ -51,7 +50,7 @@ export const createLogistics = async (req: Request, res: Response) => {
  */
 export const logisticsListByArea = async (req: Request, res: Response) => {
   try {
-    const areaName = req.query.areaName;
+    const areaName = req.body.areaName;
     if (areaName == undefined) throw new Error("Area is not specified");
 
     const client = await db.connect();

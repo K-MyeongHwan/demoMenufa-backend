@@ -12,7 +12,7 @@ import boardRouter from "./routes/boardRouter";
 import { errorHandler } from "./middlewares/errorHandler";
 
 // Environment variable setup
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3030;
 
 // Express setup
 const app = express();
@@ -20,6 +20,8 @@ const app = express();
 // Routers
 
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.get("/", (req: Request, res: Response) =>
   res.send("Go to /test for salesforce query test")
 );
