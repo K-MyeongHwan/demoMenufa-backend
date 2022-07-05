@@ -20,6 +20,8 @@ const app = express();
 // Routers
 
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.get("/", (req: Request, res: Response) =>
   res.send("Go to /test for salesforce query test")
 );

@@ -19,11 +19,8 @@ export const getChatRoomList = async (req: Request, res: Response) => {
 };
 
 export const saveMessage = async (req: Request, res: Response) => {
-  const { roomId, content } = req.query as unknown as Record<string, string>;
-  const messageInfo = [
-    roomId,
-    content
-  ];
+  const { roomId, content } = req.body as unknown as Record<string, string>;
+  const messageInfo = [roomId, content];
   const messageInfo_ = messageInfo.map((el) => `'${el}'`).join(", ");
 
   if (messageInfo.includes("")) {
@@ -32,16 +29,17 @@ export const saveMessage = async (req: Request, res: Response) => {
   try {
     const client = await db.connect();
     const chat = await client.query(
-      `insert into salesforce.ChatMessage__c (ChatRoom__c, Content__c) values (${messageInfo_})`);
+      `insert into salesforce.ChatMessage__c (ChatRoom__c, Content__c) values (${messageInfo_})`
+    );
     client.release();
     res.status(200).send({ message: "success" });
-  } catch(error) {
+  } catch (error) {
     res.send(["Something went wrong", error]);
   }
 };
 
 export const getChatmessageList = async (req: Request, res: Response) => {
-  const { roomId }  = req.query as unknown as Record<string, string>;
+  const { roomId } = req.body as unknown as Record<string, string>;
   try {
     const client = await db.connect();
     const result = await client.query(

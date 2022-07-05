@@ -30,18 +30,19 @@ export const area = async (req: Request, res: Response) => {
  * 요청 쿼리에 id가 존재할 시 update, 존재하지 않으면 add
  */
 export const areaManipulator = async (req: Request, res: Response) => {
-  const { id, name } = req.query;
+  const { id, name } = req.body;
 
-  if ([id, name].includes(undefined))
-    res.status(400).send({ message: "Bad Request" });
+  console.log(req.body);
 
   try {
     const client = await db.connect();
-    const result = await client.query(id ? update(id, name) : add(name));
+    const result = await client.query(
+      id ? (name ? update(id, name) : del(id)) : add(name)
+    );
     client.release();
-    res.status(200).send({ message: "OK" });
+    return res.status(200).send({ message: "OK" });
   } catch (error) {
-    res.status(400).send({
+    return res.status(400).send({
       message: "Bad Request",
     });
   }
@@ -67,4 +68,9 @@ const update = (id: any, name: any) => {
  */
 const add = (name: any) => {
   return `insert into salesforce.area__c (name) values ('${name}')`;
+};
+
+const del = (id: any) => {
+  if (!id) throw new Error("No Id is specified");
+  return `delete from salesforce.area__c where id = '${id}'`;
 };
