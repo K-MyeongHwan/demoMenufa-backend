@@ -1,4 +1,5 @@
 import express, { Request, Response } from "express";
+import cors from "cors";
 
 // Routes
 import userRouter from "./routes/userRouter";
@@ -18,6 +19,7 @@ const app = express();
 
 // Routers
 
+app.use(cors());
 app.get("/", (req: Request, res: Response) =>
   res.send("Go to /test for salesforce query test")
 );
@@ -27,7 +29,6 @@ app.use("/chat", chatRouter);
 app.use("/logistics", logisticsRouter);
 app.use("/company", companyRouter);
 app.use("/board", boardRouter);
-
 
 // Global Error handler
 // ! THIS MUST BE AT THE END OF ROUTE SETTINGS
