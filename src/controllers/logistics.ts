@@ -45,6 +45,44 @@ export const createLogistics = async (req: Request, res: Response) => {
 };
 
 /**
+ * PATCH
+ * 물류센터 수정
+ */
+export const updateLogistics = async (req: Request, res: Response) => {
+  try {
+    const { id, name, address, location } = req.query;
+    const client = await db.connect();
+
+    await client.query(
+      `update table salesforce.logistics__c set name = '${name}', address__c = '${address}', location__c = '${location}'  where id = '${id}'`
+    );
+    client.release();
+    res.status(400).send({ message: "OK" });
+  } catch (err) {
+    res.status(400).send(["Bad Request", err]);
+  }
+};
+
+/**
+ * DELETE
+ * 물류센터 삭제
+ */
+export const deleteLogistics = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.query;
+    console.log(id);
+    const client = await db.connect();
+    await client.query(
+      `delete from salesforce.logistics__c where id = '${id}'`
+    );
+    client.release();
+    res.status(200).send({ message: "OK" });
+  } catch (err) {
+    res.status(400).send(["Bad Request", err]);
+  }
+};
+
+/**
  * GET
  * 선택한 지역의 물류센터 표시
  */

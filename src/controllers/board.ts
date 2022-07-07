@@ -49,7 +49,7 @@ export const createBoard = async (req: Request, res: Response) => {
 };
 
 export const updateBoard = async (req: Request, res: Response) => {
-  const { id, name } = req.body;
+  const { id, name } = req.query;
 
   try {
     const client = await db.connect();
@@ -82,7 +82,7 @@ export const getBoardById = async (req: Request, res: Response) => {
 };
 
 export const deleteBoard = async (req: Request, res: Response) => {
-  const { id } = req.body;
+  const { id } = req.query;
   try {
     const client = await db.connect();
     const result = await client.query(

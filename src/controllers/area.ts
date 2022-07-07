@@ -13,7 +13,7 @@ export const area = async (req: Request, res: Response) => {
   try {
     const client = await db.connect();
     const result = await client.query(
-      "select id, name from salesforce.area__c order by id asc"
+      "select sfid, id, name from salesforce.area__c order by id asc"
     );
     res.json(result.rows);
     client.release();

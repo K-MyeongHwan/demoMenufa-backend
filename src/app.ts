@@ -1,5 +1,7 @@
 import express, { Request, Response } from "express";
+// import dotenv from "dotenv";
 import cors from "cors";
+// dotenv.config();
 
 // Routes
 import userRouter from "./routes/userRouter";
@@ -12,7 +14,7 @@ import boardRouter from "./routes/boardRouter";
 import { errorHandler } from "./middlewares/errorHandler";
 
 // Environment variable setup
-const port = process.env.PORT || 3030;
+const port: number = Number(process.env.PORT) || 3030;
 
 // Express setup
 const app = express();
