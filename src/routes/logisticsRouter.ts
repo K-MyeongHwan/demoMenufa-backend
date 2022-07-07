@@ -11,7 +11,7 @@ import {
 const router: Router = express.Router();
 
 router.get("/", logisticsList);
-router.get("/logisticsCenter", logisticsListByArea);
+router.post("/logisticsCenter", logisticsListByArea);
 router.post("/", createLogistics);
 router.patch("/", updateLogistics);
 router.delete("/", deleteLogistics);
