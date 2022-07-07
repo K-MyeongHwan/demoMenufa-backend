@@ -50,7 +50,7 @@ export const createLogistics = async (req: Request, res: Response) => {
  */
 export const updateLogistics = async (req: Request, res: Response) => {
   try {
-    const { id, name, address, location } = req.body;
+    const { id, name, address, location } = req.query;
     const client = await db.connect();
 
     await client.query(
@@ -69,13 +69,14 @@ export const updateLogistics = async (req: Request, res: Response) => {
  */
 export const deleteLogistics = async (req: Request, res: Response) => {
   try {
-    const { id } = req.body;
+    const { id } = req.query;
+    console.log(id);
     const client = await db.connect();
     await client.query(
       `delete from salesforce.logistics__c where id = '${id}'`
     );
     client.release();
-    res.status(400).send({ message: "OK" });
+    res.status(200).send({ message: "OK" });
   } catch (err) {
     res.status(400).send(["Bad Request", err]);
   }
