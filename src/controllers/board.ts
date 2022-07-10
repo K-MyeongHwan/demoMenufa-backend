@@ -56,7 +56,7 @@ export const updateBoard = async (req: Request, res: Response) => {
     const result = await client.query(
       `update salesforce.board__c
              set name = '${name}'
-             where id = ${id}`
+             where id = '${id}'`
     );
     res.status(200).send({ message: "success" });
     client.release();
