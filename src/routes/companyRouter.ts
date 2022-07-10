@@ -1,10 +1,18 @@
 import express, { Router } from "express";
-import { companyList } from "../controllers/company";
+import {
+  addCompany,
+  companyList,
+  deleteCompany,
+  updateCompany,
+} from "../controllers/company";
 
 const router: Router = express.Router();
 
 // router.use('/', test)
 
-router.post("/login", companyList);
+router.get("/", companyList);
+router.post("/", addCompany);
+router.patch("/", updateCompany);
+router.delete("/", deleteCompany);
 
 export default router;
