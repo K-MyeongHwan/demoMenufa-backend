@@ -3,10 +3,7 @@ import { db } from "../db";
 import { checkPassword, serializePassword } from "../services/auth";
 
 export const register = async (req: Request, res: Response) => {
-  const { id, name, email, profile, password } = req.body as unknown as Record<
-    string,
-    string
-  >;
+  const { id, name, email, profile, password } = req.body;
   const serialized = await serializePassword(password);
   const _userInfo = [
     id,
