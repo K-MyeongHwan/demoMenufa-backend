@@ -4,6 +4,7 @@
 
 import { Request, Response } from "express";
 import { db } from "../db";
+import axios from "axios";
 
 export const getChatRoomList = async (req: Request, res: Response) => {
   try {
@@ -46,6 +47,22 @@ export const getChatmessageList = async (req: Request, res: Response) => {
       `select Id, Content__c, CreateDate__c from salesforce.ChatMessage__c where ChatRoom__c = '${roomId}'`
     );
     res.json(result.rows);
+    client.release();
+  } catch (error) {
+    res.send(["Something went wrong", error]);
+  }
+};
+
+export const following = async (req: Request, res: Response) => {
+  const { id } = req.query;
+  console.log(id);
+  try {
+    const client = await db.connect();
+    const result = await axios.get(
+      `https://cs114.force.com/services/data/v55.0/chatter/users/${id}/following`
+    );
+    console.log(result.data.following);
+    res.status(200).json(result.data.following);
     client.release();
   } catch (error) {
     res.send(["Something went wrong", error]);
