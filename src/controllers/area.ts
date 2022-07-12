@@ -31,9 +31,6 @@ export const area = async (req: Request, res: Response) => {
  */
 export const areaManipulator = async (req: Request, res: Response) => {
   const { id, name } = req.body;
-
-  console.log(req.body);
-
   try {
     const client = await db.connect();
     const result = await client.query(

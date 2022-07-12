@@ -70,7 +70,6 @@ export const updateLogistics = async (req: Request, res: Response) => {
 export const deleteLogistics = async (req: Request, res: Response) => {
   try {
     const { id } = req.query;
-    console.log(id);
     const client = await db.connect();
     await client.query(
       `delete from salesforce.logistics__c where id = '${id}'`
