@@ -6,6 +6,7 @@ import cors from "cors";
 // Routes
 import userRouter from "./routes/userRouter";
 import areaRouter from "./routes/areaRouter";
+import articleRouter from "./routes/articleRouter";
 import chatRouter from "./routes/chatRouter";
 import logisticsRouter from "./routes/logisticsRouter";
 import companyRouter from "./routes/companyRouter";
@@ -29,6 +30,7 @@ app.get("/", (req: Request, res: Response) =>
 );
 app.use("/user", userRouter);
 app.use("/area", areaRouter);
+app.use("/article", articleRouter);
 app.use("/chat", chatRouter);
 app.use("/logistics", logisticsRouter);
 app.use("/company", companyRouter);
