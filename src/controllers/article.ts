@@ -7,7 +7,7 @@ import { db } from "../db";
 
 /**
  * GET
- * 모든 지역 리스트 출력
+ * 모든 게시글 리스트 출력
  */
 export const articleList = async (req: Request, res: Response) => {
   try {
@@ -26,7 +26,7 @@ export const articleList = async (req: Request, res: Response) => {
 
 /**
  * POST
- * 지역 추가 및 수정
+ * 게시글 추가 및 수정
  * 요청 쿼리에 id가 존재할 시 update, 존재하지 않으면 add
  */
 export const articleManipulator = async (req: Request, res: Response) => {
