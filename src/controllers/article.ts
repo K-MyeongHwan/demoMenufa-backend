@@ -7,13 +7,16 @@ import { db } from "../db";
 
 /**
  * GET
- * 모든 게시글 리스트 출력
+ * 게시글 리스트 출력
  */
 export const articleList = async (req: Request, res: Response) => {
+  const { boardId } = req.query as unknown as Record<string, string>;
   try {
     const client = await db.connect();
     const result = await client.query(
-      "select id, name, category__c, contents__c from salesforce.article__c order by id asc"
+      `select id, name, category__c, contents__c from salesforce.article__c ${searchBoard(
+        boardId
+      )} order by id asc`
     );
     res.status(200).json(result.rows);
     client.release();
@@ -79,4 +82,8 @@ const add = (name: any, category__c: any, content__c: any) => {
 const del = (id: any) => {
   if (!id) throw new Error("No Id is specified");
   return `delete from salesforce.article__c where id = '${id}'`;
+};
+
+const searchBoard = (id: string): string => {
+  return id ? `where category__c = '${id}'` : "";
 };
