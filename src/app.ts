@@ -18,7 +18,6 @@ const port: number = Number(process.env.PORT) || 3030;
 
 // Express setup
 const app = express();
-//
 
 // Routers
 
