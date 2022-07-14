@@ -9,7 +9,7 @@ export const boardCategoryList = async (req: Request, res: Response) => {
   try {
     const client = await db.connect();
     const result = await client.query(
-      `select id, name from salesforce.boardcategory__c order by id asc`
+      `select id, sfid, name from salesforce.boardcategory__c order by id asc`
     );
     res.json(result.rows);
     client.release();
@@ -22,7 +22,7 @@ export const boardList = async (req: Request, res: Response) => {
   try {
     const client = await db.connect();
     const result = await client.query(
-      `select id, name from salesforce.board__c order by id asc`
+      `select id, sfid, name from salesforce.board__c order by id asc`
     );
     res.json(result.rows);
     client.release();
@@ -71,7 +71,7 @@ export const getBoardById = async (req: Request, res: Response) => {
   try {
     const client = await db.connect();
     const result = await client.query(
-      `select id, name from salesforce.board__c where id = ${id}`
+      `select id, sfid, name from salesforce.board__c where sfid = '${id}' limit 1`
     );
     res.json(result.rows);
     client.release();
