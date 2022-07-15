@@ -49,15 +49,19 @@ export const createLogistics = async (req: Request, res: Response) => {
  * 물류센터 수정
  */
 export const updateLogistics = async (req: Request, res: Response) => {
+  const { id, name, address, location } = req.query as unknown as Record<
+    string,
+    string
+  >;
+
   try {
-    const { id, name, address, location } = req.query;
     const client = await db.connect();
 
     await client.query(
-      `update table salesforce.logistics__c set name = '${name}', address__c = '${address}', location__c = '${location}'  where id = ${id}`
+      `update salesforce.logistics__c set name = '${name}', address__c = '${address}', location__c = '${location}'  where id = '${id}'`
     );
     client.release();
-    res.status(400).send({ message: "OK" });
+    res.status(200).send({ message: "OK" });
   } catch (err) {
     res.status(400).send(["Bad Request", err]);
   }
