@@ -14,9 +14,29 @@ export const articleList = async (req: Request, res: Response) => {
   try {
     const client = await db.connect();
     const result = await client.query(
-      `select id, name, category__c, contents__c from salesforce.article__c ${searchBoard(
+      `select id, sfid, name, category__c from salesforce.article__c ${searchBoard(
         boardId
       )} order by id asc`
+    );
+    res.status(200).json(result.rows);
+    client.release();
+  } catch (error) {
+    res.status(400).send({
+      message: "Bad Request",
+    });
+  }
+};
+
+/**
+ * GET
+ * 게시글 가져오기
+ */
+export const article = async (req: Request, res: Response) => {
+  const { id } = req.query as unknown as Record<string, string>;
+  try {
+    const client = await db.connect();
+    const result = await client.query(
+      `select id, sfid, name, contents__c, createddate, createdbyid from salesforce.article__c where id = '${id}' limit 1`
     );
     res.status(200).json(result.rows);
     client.release();
@@ -33,15 +53,17 @@ export const articleList = async (req: Request, res: Response) => {
  * 요청 쿼리에 id가 존재할 시 update, 존재하지 않으면 add
  */
 export const articleManipulator = async (req: Request, res: Response) => {
-  const { id, name, category, content } = req.body;
+  const { id, name, category, content, createdById } =
+    req.body as unknown as Record<string, string>;
+  console.log(id, name, category, content);
   try {
     const client = await db.connect();
-    const result = await client.query(
+    await client.query(
       id
         ? name
           ? update(id, name, category, content)
           : del(id)
-        : add(name, category, content)
+        : add(name, category, content, createdById)
     );
     client.release();
     return res.status(200).send({ message: "OK" });
@@ -61,10 +83,12 @@ export const articleManipulator = async (req: Request, res: Response) => {
  * @param content__c 내용
  * @returns query string
  */
-const update = (id: any, name: any, category__c: any, content__c: any) => {
-  if ([null, undefined].includes(id))
-    throw new Error("Article Id is not specified");
-
+const update = (
+  id: string,
+  name: string,
+  category__c: string,
+  content__c: string
+) => {
   return `update salesforce.article__c set name = '${name}', category__c = '${category__c}', contents__c = '${content__c}' where id = '${id}'`;
 };
 
@@ -73,10 +97,19 @@ const update = (id: any, name: any, category__c: any, content__c: any) => {
  * @param name 게시글 이름
  * @param category__c 게시판
  * @param content__c 내용
+ * @param createdById 작성자
  * @returns query string
  */
-const add = (name: any, category__c: any, content__c: any) => {
-  return `insert into salesforce.article__c (name, category__c, contents__c ) values ('${name}', '${category__c}', '${content__c}')`;
+const add = (
+  name: string,
+  category__c: string,
+  content__c: string,
+  createdById: string
+) => {
+  return `insert into salesforce.article__c
+  (name, category__c, contents__c, createdById )
+  values
+  ('${name}', '${category__c}', '${content__c}', '${createdById}')`;
 };
 
 const del = (id: any) => {
