@@ -5,24 +5,11 @@
 import { Request, Response } from "express";
 import { db } from "../db";
 
-export const boardCategoryList = async (req: Request, res: Response) => {
-  try {
-    const client = await db.connect();
-    const result = await client.query(
-      `select id, sfid, name from salesforce.boardcategory__c order by id asc`
-    );
-    res.json(result.rows);
-    client.release();
-  } catch (error) {
-    res.send(["Something went wrong", error]);
-  }
-};
-
 export const boardList = async (req: Request, res: Response) => {
   try {
     const client = await db.connect();
     const result = await client.query(
-      `select id, sfid, name from salesforce.board__c order by id asc`
+      `select sfid, id, name from salesforce.board__c order by id asc`
     );
     res.json(result.rows);
     client.release();

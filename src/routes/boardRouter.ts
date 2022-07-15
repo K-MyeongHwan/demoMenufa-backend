@@ -1,6 +1,5 @@
 import express, { Router } from "express";
 import {
-  boardCategoryList,
   boardList,
   createBoard,
   deleteBoard,
@@ -11,7 +10,6 @@ import {
 const router: Router = express.Router();
 
 router.get("/", boardList);
-router.get("/category", boardCategoryList);
 router.post("/", createBoard);
 router.patch("/", updateBoard);
 router.delete("/", deleteBoard);
