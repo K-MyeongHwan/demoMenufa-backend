@@ -58,7 +58,7 @@ export const getBoardById = async (req: Request, res: Response) => {
   try {
     const client = await db.connect();
     const result = await client.query(
-      `select id, name from salesforce.board__c where id = ${id}`
+      `select id, sfid, name from salesforce.board__c where sfid = '${id}' limit 1`
     );
     res.json(result.rows);
     client.release();
