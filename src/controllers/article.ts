@@ -77,7 +77,7 @@ export const articleManipulator = async (req: Request, res: Response) => {
     req.body as unknown as Record<string, string>;
   try {
     const client = await db.connect();
-    await client.query(
+    const result = await client.query(
       id
         ? name
           ? update(id, name, category, content)
@@ -85,7 +85,15 @@ export const articleManipulator = async (req: Request, res: Response) => {
         : add(name, category, content, createdById)
     );
     client.release();
-    return res.status(200).send({ message: "OK" });
+    return id
+      ? res.status(200).send({ message: "OK" })
+      : res
+          .status(200)
+          .send({
+            message: "OK",
+            id: result.rows[0].id,
+            category: result.rows[0].category__c,
+          });
   } catch (error) {
     return res.status(400).send({
       message: "Bad Request",
@@ -128,7 +136,9 @@ const add = (
   return `insert into salesforce.article__c
   (name, category__c, contents__c, createdById )
   values
-  ('${name}', '${category__c}', '${content__c}', '${createdById}')`;
+  ('${name}', '${category__c}', '${content__c}', '${createdById}')
+  returning id, category__c
+  `;
 };
 
 const del = (id: any) => {
