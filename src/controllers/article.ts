@@ -48,6 +48,26 @@ export const article = async (req: Request, res: Response) => {
 };
 
 /**
+ * GET
+ * 첨부파일 가져오기
+ */
+export const getFiles = async (req: Request, res: Response) => {
+  const { sfid } = req.query as unknown as Record<string, string>;
+  try {
+    const client = await db.connect();
+    const result = await client.query(
+      `select id, sfid, name, url__c from salesforce.files__c where article__c = '${sfid}'`
+    );
+    res.status(200).json(result.rows);
+    client.release();
+  } catch (error) {
+    res.status(400).send({
+      message: "Bad Request",
+    });
+  }
+};
+
+/**
  * POST
  * 게시글 추가 및 수정
  * 요청 쿼리에 id가 존재할 시 update, 존재하지 않으면 add
@@ -89,7 +109,7 @@ const update = (
   category__c: string,
   content__c: string
 ) => {
-  return `update salesforce.article__c set name = '${name}', category__c = '${category__c}', contents__c = '${content__c}' where id = '${id}'`;
+  return `update salesforce.article__c set name = '${name}', contents__c = '${content__c}' where id = '${id}'`;
 };
 
 /**
