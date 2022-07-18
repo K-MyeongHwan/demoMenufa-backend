@@ -75,7 +75,6 @@ export const getFiles = async (req: Request, res: Response) => {
 export const articleManipulator = async (req: Request, res: Response) => {
   const { id, name, category, content, createdById } =
     req.body as unknown as Record<string, string>;
-  console.log(id, name, category, content);
   try {
     const client = await db.connect();
     await client.query(
