@@ -2,24 +2,42 @@
  * TABLE    : salesforce.logistics__c
  */
 
-import { Request, Response } from "express";
+import { Request, response, Response } from "express";
 import { db } from "../db";
 
 /**
  * GET
  * 모든 물류센터 표시
  */
-
 export const logisticsList = async (req: Request, res: Response) => {
   try {
     const client = await db.connect();
     const result = await client.query(
-      "select id, name, address__c, location__c, locationName__c from salesforce.logistics__c order by id asc"
+      "select id, sfid, name, address__c, location__c, locationName__c from salesforce.logistics__c order by id asc"
     );
     res.json(result.rows);
     client.release();
   } catch (error) {
     res.send(["Something went wrong", error]);
+  }
+};
+
+/**
+ * GET
+ * 물류센터 표시
+ */
+export const getLogistics = async (req: Request, res: Response) => {
+  const { id } = req.query as unknown as Record<string, string>;
+  const client = await db.connect();
+  try {
+    const result = await client.query(
+      `select id, sfid, name, address__c, location__c, locationName__c from salesforce.logistics__c where id = '${id}'`
+    );
+    res.json(result.rows[0]);
+  } catch (error) {
+    res.send(["Something went wrong", error]);
+  } finally {
+    client.release();
   }
 };
 
@@ -117,5 +135,55 @@ export const logisticsListByArea = async (req: Request, res: Response) => {
     client.release();
   } catch (error) {
     res.status(400).send(["Bad Request", error]);
+  }
+};
+
+/**
+ * GET
+ * Get contracted logistics of a company
+ */
+export const contractedLogistics = async (req: Request, res: Response) => {
+  const { sfid } = req.query as unknown as Record<string, string>;
+  const client = await db.connect();
+
+  try {
+    const _contracts = await client.query(
+      `select center__c from salesforce.assignedcenter__c where company__c = '${sfid}'`
+    );
+    const centerIdArray = _contracts.rows.map((el) => el.center__c);
+    const idQueryString = `('${centerIdArray.join("', '")}')`;
+    const centers = await client.query(
+      `select id, sfid, name from salesforce.logistics__c where sfid in ${idQueryString}`
+    );
+    res.status(200).send(centers.rows);
+  } catch (error) {
+    res.status(400).send(["Bad Request", error]);
+  } finally {
+    client.release();
+  }
+};
+
+/**
+ * GET
+ * Get contracted companies of a logistics
+ */
+export const contractedCompany = async (req: Request, res: Response) => {
+  const { sfid } = req.query as unknown as Record<string, string>;
+  const client = await db.connect();
+
+  try {
+    const _contracts = await client.query(
+      `select company__c from salesforce.assignedcenter__c where center__c = '${sfid}'`
+    );
+    const companyIdArray = _contracts.rows.map((el) => el.company__c);
+    const idQueryString = `('${companyIdArray.join("', '")}')`;
+    const companies = await client.query(
+      `select id, sfid, name from salesforce.company__c where sfid in ${idQueryString}`
+    );
+    res.status(200).send(companies.rows);
+  } catch (error) {
+    res.status(400).send(["Bad Request", error]);
+  } finally {
+    client.release();
   }
 };

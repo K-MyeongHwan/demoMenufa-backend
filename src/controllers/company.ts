@@ -18,6 +18,21 @@ export const companyList = async (req: Request, res: Response) => {
   }
 };
 
+// Pick one company
+export const getCompany = async (req: Request, res: Response) => {
+  const { id } = req.query as unknown as Record<string, string>;
+  try {
+    const client = await db.connect();
+    const result = await client.query(
+      `select id, sfid, name, phone__c, address__c  from salesforce.company__c where id = '${id}'`
+    );
+    res.json(result.rows[0]);
+    client.release();
+  } catch (error) {
+    res.send(["Something went wrong", error]);
+  }
+};
+
 // Add company
 export const addCompany = async (req: Request, res: Response) => {
   const { name } = req.body;
